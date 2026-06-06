@@ -5,6 +5,12 @@
 #import "PWUI.h"
 #import <UIKit/UIKit.h>
 
+@interface PWPluginBridge : NSObject
++ (instancetype)shared;
+- (void)startPlugin;
+- (void)stopPlugin;
+@end
+
 @interface PWPluginBridge ()
 @property (nonatomic, strong) UIWindow *ballWindow;
 @property (nonatomic, strong) UIWindow *playerWindow;
