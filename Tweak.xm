@@ -11,7 +11,13 @@
 
 #import <substrate.h>
 #import <UIKit/UIKit.h>
-#import "Sources/PWPluginBridge.m"
+
+// Forward declare bridge class (defined in PWPluginBridge.m)
+@interface PWPluginBridge : NSObject
++ (instancetype)shared;
+- (void)startPlugin;
+- (void)stopPlugin;
+@end
 
 static PWPluginBridge *bridge = nil;
 

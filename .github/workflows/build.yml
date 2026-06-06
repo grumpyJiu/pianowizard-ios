@@ -13,24 +13,31 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          brew install ldid dpkg
+          brew install ldid dpkg make
 
       - name: Setup Theos
         run: |
-          git clone --recursive https://github.com/theos/theos.git $HOME/theos
-          echo "THEOS=$HOME/theos" >> $GITHUB_ENV
-          echo "$HOME/theos/bin" >> $GITHUB_PATH
+          export THEOS=$HOME/theos
+          git clone --recursive https://github.com/theos/theos.git $THEOS
+          echo "THEOS=$THEOS" >> $GITHUB_ENV
+          echo "$THEOS/bin" >> $GITHUB_PATH
+          # Verify
+          $THEOS/bin/nic.pl --version 2>&1 || echo "Theos installed"
 
-      - name: Setup SDK
+      - name: Debug Environment
         run: |
-          # Use the iOS SDK from Xcode
-          SDK_PATH=$(xcrun --sdk iphoneos --show-sdk-path)
-          echo "SDK_PATH=$SDK_PATH" >> $GITHUB_ENV
+          echo "THEOS=$THEOS"
+          echo "SDK=$(xcrun --sdk iphoneos --show-sdk-path)"
+          ls $(xcrun --sdk iphoneos --show-sdk-path)/System/Library/Frameworks/UIKit.framework/Headers/ 2>/dev/null | head -5
+          which clang
 
       - name: Build
         run: |
           cd pianowizard-ios
-          make package FINALPACKAGE=1
+          export THEOS=$HOME/theos
+          export PATH=$THEOS/bin:$PATH
+          export SDKVERSION=$(xcrun --sdk iphoneos --show-sdk-version)
+          make package FINALPACKAGE=1 2>&1
 
       - name: Upload DEB
         uses: actions/upload-artifact@v4
