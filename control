@@ -1,0 +1,9 @@
+Package: com.pianowizard.tweak
+Name: PianoWizard
+Version: 1.6.2
+Section: Tweaks
+Architecture: iphoneos-arm
+Depends: mobilesubstrate, firmware (>= 14.0)
+Description: Piano auto-play assistant with floating overlay
+Maintainer: PianoWizard Team
+Author: PianoWizard
