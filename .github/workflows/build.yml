@@ -11,16 +11,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install Dependencies
+        run: |
+          brew install ldid dpkg
+
       - name: Setup Theos
         run: |
           git clone --recursive https://github.com/theos/theos.git $HOME/theos
           echo "THEOS=$HOME/theos" >> $GITHUB_ENV
           echo "$HOME/theos/bin" >> $GITHUB_PATH
 
-      - name: Build PianoWizard
+      - name: Setup SDK
+        run: |
+          # Use the iOS SDK from Xcode
+          SDK_PATH=$(xcrun --sdk iphoneos --show-sdk-path)
+          echo "SDK_PATH=$SDK_PATH" >> $GITHUB_ENV
+
+      - name: Build
         run: |
           cd pianowizard-ios
-          make package
+          make package FINALPACKAGE=1
 
       - name: Upload DEB
         uses: actions/upload-artifact@v4
