@@ -65,7 +65,7 @@
     CGFloat sw = UIScreen.mainScreen.bounds.size.width;
     self.playerWindow = [[UIWindow alloc] initWithFrame:CGRectMake((sw-340)/2, 480, 340, 130)];
     if (@available(iOS 13.0, *)) {
-        self.playerWindow.windowScene = [UIApplication sharedApplication].connectedScenes.allObjects.firstObject;
+        self.playerWindow.windowScene = (UIWindowScene *)[UIApplication sharedApplication].connectedScenes.allObjects.firstObject;
     }
     self.playerWindow.windowLevel = UIWindowLevelStatusBar + 100;
     self.playerWindow.backgroundColor = [UIColor clearColor];
