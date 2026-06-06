@@ -40,7 +40,7 @@
     CGFloat sw = UIScreen.mainScreen.bounds.size.width;
     self.ballWindow = [[UIWindow alloc] initWithFrame:CGRectMake(sw - 78, 120, 48, 48)];
     if (@available(iOS 13.0, *)) {
-        self.ballWindow.windowScene = [UIApplication sharedApplication].connectedScenes.allObjects.firstObject;
+        self.ballWindow.windowScene = (UIWindowScene *)[UIApplication sharedApplication].connectedScenes.allObjects.firstObject;
     }
     self.ballWindow.windowLevel = UIWindowLevelStatusBar + 100;
     self.ballWindow.backgroundColor = [UIColor clearColor];
